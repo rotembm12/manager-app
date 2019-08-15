@@ -28,6 +28,8 @@ const CreateTask = ({
 
     const onCloseModal = () => {
         setShowCreateTasksModal(false);
+        setTitle('');
+        setDescription('');
     };
 
     return (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Login from './Login/Login';
 import Header from './Header/Header';
+import Footer from './Footer/Footer';
 import UserPage from './UserPage/UserPage';
 import { userLogout, continueSession } from './hooks/Authentication';
 import { Container } from 'react-bootstrap';
@@ -49,7 +50,7 @@ function App() {
             <Header user={user} onUserLogout={onUserLogout} />
             <Container
                 fluid='true'
-                className='justify-content-center text-center'
+                className='main-content justify-content-center text-center'
             >
                 {!user ? (
                     <Login onUserLogin={onUserLogin} />
@@ -57,6 +58,7 @@ function App() {
                     <UserPage loggedUser={user} />
                 )}
             </Container>
+            <Footer />
         </div>
     );
 }

@@ -16,7 +16,7 @@
     padding: 0;
     margin-top: 3px;
 }
-.card-img-top {
+.user-intro .card-img-top {
     border-radius: 50%;
     height: 60%;
 }

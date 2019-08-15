@@ -46,8 +46,6 @@ const UserTasks = () => {
         }
     };
 
-    const updateTask = async () => {};
-
     const afterDeletingTask = deletedTask => {
         const filteredTasks = tasks.filter(task => {
             return task._id !== deletedTask._id;
@@ -69,7 +67,11 @@ const UserTasks = () => {
         <Row>
             <Col xs lg={{ span: 10, offset: 1 }}>
                 <Row className='justify-content-center'>
-                    <Button variant='success' onClick={openCreateNewTaskModal}>
+                    <Button
+                        variant='success'
+                        className='btn purple-gradient'
+                        onClick={openCreateNewTaskModal}
+                    >
                         Create new Task
                     </Button>
                 </Row>
