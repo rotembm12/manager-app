@@ -1,0 +1,11 @@
+*,
+.container-fluid {
+    padding: 0;
+    margin: 0;
+}
+.nav-link {
+    color: white;
+}
+.navbar-brand {
+    color: white !important;
+}
