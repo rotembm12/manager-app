@@ -75,7 +75,7 @@ const UserIntro = props => {
     });
 
     return (
-        <Row className='justify-content-center'>
+        <Row className='justify-content-center user-intro-wrapper'>
             <Col xs lg={{ span: 11 }} className=' user-intro '>
                 <Card>
                     <Form id='file-form'>
@@ -108,7 +108,7 @@ const UserIntro = props => {
                             )}
                         </Row>
                     </Form>
-                    <Row className='d-flex justify-content-end'>
+                    <Row className='d-flex justify-content-end user-intro-bg'>
                         <Col
                             xs={{ span: 4 }}
                             className='d-flex align-items-end'
