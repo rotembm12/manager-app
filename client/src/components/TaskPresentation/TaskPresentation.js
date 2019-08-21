@@ -16,6 +16,7 @@ const TaskPresentation = ({
             aria-labelledby='contained-modal-title-vcenter'
             centered
             show={visible}
+            className='presentation-modal'
         >
             <Modal.Header closeButton onClick={onCloseModal}>
                 <Modal.Title id='contained-modal-title-vcenter'>

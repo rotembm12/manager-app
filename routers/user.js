@@ -128,7 +128,6 @@ router.get('/api/users/:id/avatar/:any', async (req, res) => {
         }
 
         if (user.avatar.toString() === '') {
-            console.log(user.avatar);
             throw new Error();
         }
 

@@ -1,15 +1,15 @@
-.modal-content {
+.presentation-modal .modal-content {
     background-image: url('http://www.timvandevall.com/wp-content/uploads/2013/05/Lined-Paper-Template-19.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     box-shadow: inset 5550px 50px 50px 50px rgba(190, 142, 214, 0.3);
 }
-.modal-header {
+.presentation-modal .modal-header {
     border-bottom: 2px solid black;
     margin-bottom: 10px;
     box-shadow: inset 5550px 50px 50px 50px rgba(255, 255, 255, 0.6);
 }
-.modal-footer {
+.presentation-modal .modal-footer {
     border-top: 2px solid black;
     margin-top: 10px;
     box-shadow: inset 5550px 50px 50px 50px rgba(255, 255, 255, 0.6);
