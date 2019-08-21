@@ -3,6 +3,7 @@ const User = require('../models/user');
 const auth = require('../middleware/auth');
 const multer = require('multer');
 const sharp = require('sharp');
+const fs = require('fs');
 const router = new express.Router();
 
 const fileFilter = function(req, file, cb) {
@@ -108,29 +109,32 @@ router.post(
     }
 );
 
-router.delete(
-    '/api/users/me/avatar',
-    auth,
-    async (req, res) => {
-        res.user.avatar = undefined;
+router.delete('/api/users/me/avatar', auth, async (req, res) => {
+    try {
+        req.user.avatar = '';
         await req.user.save();
-        res.send();
-    },
-    (error, req, res, next) => {
-        res.status(400).send({ error: error.message });
+        res.send({ message: 'avatar deleted' });
+    } catch (e) {
+        res.status(500).send({ error: e.toString() });
     }
-);
+});
 
 router.get('/api/users/:id/avatar/:any', async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
+
         if (!user || !user.avatar) {
             throw new Error();
         }
-        res.set('Content-Type', 'image/png');
-        res.send(user.avatar);
+
+        if (user.avatar.toString() === '') {
+            console.log(user.avatar);
+            throw new Error();
+        }
+
+        res.send({ avatar: user.avatar.toString('base64') });
     } catch (e) {
-        res.status(404).send();
+        res.status(404).send({ error: e.toString() });
     }
 });
 

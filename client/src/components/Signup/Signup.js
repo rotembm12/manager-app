@@ -31,6 +31,7 @@ const Signup = ({ afterSignup, setShowSignup, setShowErrorModal }) => {
             setShowErrorModal(true);
             return;
         }
+
         const user = {
             name,
             email,

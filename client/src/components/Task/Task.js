@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import TaskModal from '../TaskModal/TaskModal';
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
+import TaskPresentation from '../TaskPresentation/TaskPresentation';
 import './Task.css';
+import { create } from 'domain';
 
 const Task = ({ task, afterDeletingTask }) => {
     const { completed, createdAt, _id } = task; //also have title and description
@@ -98,80 +100,36 @@ const Task = ({ task, afterDeletingTask }) => {
 
     return (
         <>
-            {!taskPreview ? (
-                <>
-                    <div className='card'>
-                        <div className='view overlay'>
-                            <img
-                                src='https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2821%29.jpg'
-                                alt='some pic'
-                                className='card-img-top'
-                            />
-                            <a>
-                                <div className='mask rgba-white-slight' />
-                            </a>
-                        </div>
-                        <div className='card-body elegant-color white-text rounded-bottom'>
-                            <a href='' className='activator waves-effect mr-4'>
-                                <i className='fas fa-share-alt white-text' />
-                            </a>
-                            <h4 className='card-title'>{title}</h4>
-                            <hr className='hr-light' />
-                            <p className='card-text white-text mb-4'>
-                                {description}
-                            </p>
-                            <a
-                                href='#!'
-                                className='white-text d-flex justify-content-end mr-4'
-                                onClick={toggleTaskPreview}
-                            >
-                                <h5>
-                                    Read more
-                                    <i className='fas fa-angle-double-right' />
-                                </h5>
-                            </a>
-                        </div>
-                    </div>
-                </>
-            ) : (
-                <Card className='m-3'>
-                    <Card.Header className='d-flex justify-content-between'>
-                        <Card.Title>
-                            <span>Title: {title}</span>
-                        </Card.Title>
-                        <span>
-                            <p>Created At: {createdAt}</p>
-                        </span>
-                    </Card.Header>
-                    <Card.Body>
-                        <h6 className='text-center'>Description</h6>
-                        <Card.Text>{description}</Card.Text>
-                    </Card.Body>
-                    <Card.Footer className='text-muted d-flex justify-content-end'>
-                        <Button
-                            className='mr-2'
-                            variant='dark'
-                            onClick={toggleTaskPreview}
-                        >
-                            Hide task
-                        </Button>
-                        <Button
-                            className='mr-2'
-                            variant='info'
-                            onClick={openEditModal}
-                        >
-                            Edit Task
-                        </Button>
-                        <Button
-                            className='mr-2'
-                            variant='danger'
-                            onClick={openConfModal}
-                        >
-                            Delete Task
-                        </Button>
-                    </Card.Footer>
-                </Card>
-            )}
+            <div className='card'>
+                <div className='card-body elegant-color white-text rounded-bottom'>
+                    <a href='' className='activator waves-effect mr-4'>
+                        <i className='fas fa-share-alt white-text' />
+                    </a>
+                    <h4 className='card-title'>{title}</h4>
+                    <hr className='hr-light' />
+                    <p className='card-text white-text mb-4'>{description}</p>
+                    <a
+                        href='#!'
+                        className='white-text d-flex justify-content-end mr-4'
+                        onClick={toggleTaskPreview}
+                    >
+                        <h5>
+                            Read more
+                            <i className='fas fa-angle-double-right' />
+                        </h5>
+                    </a>
+                </div>
+            </div>
+
+            <TaskPresentation
+                visible={taskPreview}
+                title={title}
+                description={description}
+                createdAt={createdAt}
+                onCloseModal={toggleTaskPreview}
+                openEditModal={openEditModal}
+                openConfModal={openConfModal}
+            />
 
             <TaskModal
                 modalTitle='Edit task'

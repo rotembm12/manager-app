@@ -65,7 +65,7 @@ const UserTasks = () => {
 
     return (
         <Row>
-            <Col xs lg={{ span: 10, offset: 1 }}>
+            <Col xs={{ span: 10, offset: 1 }}>
                 <Row className='justify-content-center'>
                     <Button
                         variant='success'

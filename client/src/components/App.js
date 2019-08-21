@@ -24,6 +24,7 @@ function App() {
     useEffect(() => {
         checkExistingToken();
     });
+    
     const checkExistingToken = async () => {
         try {
             if (
