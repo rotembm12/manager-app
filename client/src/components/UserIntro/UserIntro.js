@@ -41,7 +41,7 @@ const UserIntro = props => {
             setShouldRender(true);
             setFile();
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     };
 
@@ -56,7 +56,7 @@ const UserIntro = props => {
                 if (res.error) {
                     throw new Error();
                 }
-                console.log(res);
+
                 const src = `data:image/png;base64, ${res.avatar}`;
                 setAvatar(src);
                 setShouldRender(false);
@@ -65,7 +65,7 @@ const UserIntro = props => {
         } catch (err) {
             setAvatar('https://static.thenounproject.com/png/770826-200.png');
             setShouldRender(false);
-            return console.log('avatar not found');
+            return console.warn('avatar not found');
         }
     };
 
@@ -76,13 +76,11 @@ const UserIntro = props => {
                 Authorization: `Bearer ${localStorage['authorization']}`
             }
         });
-        console.log(response);
         const res = await response.json();
         if (res.error) {
-            return console.log(res);
+            return console.error(res.error);
         }
         if (res.message) {
-            console.log('avatar deleted');
             setAvatar('https://static.thenounproject.com/png/770826-200.png');
             setFilename('choose avatar');
         }

@@ -6,7 +6,7 @@ import TaskPresentation from '../TaskPresentation/TaskPresentation';
 import './Task.css';
 import { create } from 'domain';
 
-const Task = ({ task, afterDeletingTask }) => {
+const Task = ({ task, afterDeletingTask, updateTaskLocally }) => {
     const { completed, createdAt, _id } = task; //also have title and description
 
     //State hooks
@@ -16,6 +16,7 @@ const Task = ({ task, afterDeletingTask }) => {
     const [isEdited, setIsEdited] = useState(false);
     const [taskPreview, setTaskPreview] = useState(false);
     const [showConfModal, setShowConfModal] = useState(false);
+
     //state change effects
     useEffect(() => {
         if (isEdited === true) {
@@ -52,7 +53,14 @@ const Task = ({ task, afterDeletingTask }) => {
         }
     };
 
-    const editTask = async task => {
+    const editTask = task => {
+        if (task.title === title && task.description === description) {
+            return console.log('values aint changed');
+        }
+        createOrEditTask(task);
+    };
+
+    const createOrEditTask = async task => {
         if (localStorage['authorization'] && task) {
             const token = `Bearer ${localStorage['authorization']}`;
             try {
@@ -66,13 +74,16 @@ const Task = ({ task, afterDeletingTask }) => {
                     body: JSON.stringify(task)
                 });
                 setIsEdited(true);
+                setTitle(task.title);
+                setDescription(task.description);
+                updateTaskLocally(task);
             } catch (e) {
                 console.log(e);
             }
         }
     };
 
-    const wrapTask = async () => {
+    const wrapTask = () => {
         if (title === '' || description === '') {
             return alert('please fill all fields');
         }
@@ -80,7 +91,7 @@ const Task = ({ task, afterDeletingTask }) => {
             title,
             description
         };
-        await editTask(task);
+        createOrEditTask(task);
     };
 
     const deleteTask = async () => {
@@ -100,7 +111,7 @@ const Task = ({ task, afterDeletingTask }) => {
 
     return (
         <>
-            <div className='card'>
+            <div className='card task-cards'>
                 <div className='card-body elegant-color white-text rounded-bottom'>
                     <a href='' className='activator waves-effect mr-4'>
                         <i className='fas fa-share-alt white-text' />
@@ -113,10 +124,7 @@ const Task = ({ task, afterDeletingTask }) => {
                         className='white-text d-flex justify-content-end mr-4'
                         onClick={toggleTaskPreview}
                     >
-                        <h5>
-                            Read more
-                            <i className='fas fa-angle-double-right' />
-                        </h5>
+                        <h5>Read more...</h5>
                     </a>
                 </div>
             </div>
@@ -127,19 +135,8 @@ const Task = ({ task, afterDeletingTask }) => {
                 description={description}
                 createdAt={createdAt}
                 onCloseModal={toggleTaskPreview}
-                openEditModal={openEditModal}
                 openConfModal={openConfModal}
-            />
-
-            <TaskModal
-                modalTitle='Edit task'
-                visible={showEditModal}
-                onCloseModal={onCloseModal}
-                title={title}
-                handleTitleChange={handleTitleChange}
-                description={description}
-                handleDescriptionChange={handleDescriptionChange}
-                wrapTask={wrapTask}
+                editTask={editTask}
             />
             <ConfirmationModal
                 modalTitle='Delete Task'

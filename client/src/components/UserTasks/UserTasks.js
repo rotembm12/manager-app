@@ -7,6 +7,16 @@ const UserTasks = () => {
     const [tasks, setTasks] = useState();
     const [showCreateTasksModal, setShowCreateTasksModal] = useState(false);
 
+    const updateTaskLocally = updatedTask => {
+        const updatedTasksList = tasks.map(task => {
+            if (updatedTask._id === task._id) {
+                task = updatedTask;
+            }
+            return task;
+        });
+        setTasks(updatedTasksList);
+    };
+
     const readTasks = async () => {
         const token = `Bearer ${localStorage['authorization']}`;
         try {
@@ -20,13 +30,12 @@ const UserTasks = () => {
             const userTasks = await response.json();
             setTasks(userTasks);
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     };
 
     const createNewTask = async task => {
         if (localStorage['authorization'] && task) {
-            console.log(task);
             const token = `Bearer ${localStorage['authorization']}`;
             try {
                 const response = await fetch('/api/tasks', {
@@ -41,7 +50,7 @@ const UserTasks = () => {
                 const newTask = await response.json();
                 setTasks([...tasks, newTask]);
             } catch (e) {
-                console.log(e);
+                console.error(e);
             }
         }
     };
@@ -94,6 +103,7 @@ const UserTasks = () => {
                                       key={task._id}
                                       task={task}
                                       afterDeletingTask={afterDeletingTask}
+                                      updateTaskLocally={updateTaskLocally}
                                   />
                               </Col>
                           ))
